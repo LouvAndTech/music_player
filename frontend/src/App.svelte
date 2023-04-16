@@ -12,28 +12,6 @@
 </script>
 
 <main>
-    <!-- div class="navbar">
-      <h1>Music player</h1>
-      <ul class="page">
-        <div>• Categories :</div>
-        <li on:click={()=>{url="Songs"}}>Songs</li>
-        <li on:click={()=>{url="Albums"}}>Albums</li>
-        <li on:click={()=>{url="Artists"}}>Artists</li>
-        <div>• Tools :</div>
-        <li on:click={()=>{url="Add"}}>Add Song</li>
-      <ul>
-    </div>
-    <div>
-      {#if url == 'Songs'}
-        <Songs/>
-      {:else if url == 'Albums'}
-        <Albums/>
-      {:else if url == 'Artists'}
-        <Artists/>
-      {:else if url == 'Add'}
-        <Add/>
-      {/if}
-    </div-->
   <Router url="{url}">
     <div class="navbar" use:links>
       <h1>Music player</h1>
@@ -43,10 +21,10 @@
         <li><a href="Albums">Albums</a></li>
         <li><a href="Artists">Artists</a></li>
         <div>• Tools :</div>
-        <li><a href="Add">Add Song</a></li>
+        <li><a href="Add">Add Entry</a></li>
       </ul>
     </div>
-    <div>
+    <div class="page">
       <Route path="Songs"><Songs/></Route>
       <Route path="Albums"><Albums/></Route>
       <Route path="Artists"><Artists/></Route>
@@ -129,6 +107,9 @@
     }
 
     .page{
+      display: flex;
+      align-items: start;
+      justify-content: center;
       width: 80%;
       height: 100%;
     }

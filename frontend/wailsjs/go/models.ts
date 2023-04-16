@@ -1,7 +1,7 @@
 export namespace main {
 	
 	export class Album {
-	    id: number;
+	    id?: number;
 	    artist: number;
 	    name: string;
 	    imagePath: string;
@@ -19,7 +19,7 @@ export namespace main {
 	    }
 	}
 	export class Artist {
-	    id: number;
+	    id?: number;
 	    firstName: string;
 	    lastName: string;
 	
@@ -46,6 +46,26 @@ export namespace main {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.field = source["field"];
 	        this.value = source["value"];
+	    }
+	}
+	export class Song {
+	    id?: number;
+	    album: number;
+	    artist: number;
+	    name: string;
+	    path: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Song(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.id = source["id"];
+	        this.album = source["album"];
+	        this.artist = source["artist"];
+	        this.name = source["name"];
+	        this.path = source["path"];
 	    }
 	}
 

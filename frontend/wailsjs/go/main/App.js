@@ -9,3 +9,15 @@ export function GetAlbums(arg1) {
 export function GetArtists(arg1) {
   return window['go']['main']['App']['GetArtists'](arg1);
 }
+
+export function PostAlbums(arg1) {
+  return window['go']['main']['App']['PostAlbums'](arg1);
+}
+
+export function PostArtists(arg1) {
+  return window['go']['main']['App']['PostArtists'](arg1);
+}
+
+export function PostSongs(arg1) {
+  return window['go']['main']['App']['PostSongs'](arg1);
+}

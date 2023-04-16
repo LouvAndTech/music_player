@@ -85,18 +85,18 @@ func (e *Dao) openDB() (*sql.DB, error) {
 
 /* ==== DB TYPES ==== */
 type Artist struct {
-	ID        int64  `json:"id" db:"person_id"`
+	ID        *int64 `json:"id" db:"person_id"`
 	FirstName string `json:"firstName" db:"first_name"`
 	LastName  string `json:"lastName" db:"last_name"`
 }
 type Album struct {
-	ID        int64  `json:"id" db:"album_id"`
+	ID        *int64 `json:"id" db:"album_id"`
 	Artist    int64  `json:"artist" db:"artist_id"`
 	Name      string `json:"name" db:"album_name"`
 	ImagePath string `json:"imagePath" db:"album_image"`
 }
 type Song struct {
-	ID     int64  `json:"id" db:"song_id"`
+	ID     *int64 `json:"id" db:"song_id"`
 	Album  int64  `json:"album" db:"album_id"`
 	Artist int64  `json:"artist" db:"artist_id"`
 	Name   string `json:"name" db:"song_name"`
@@ -110,24 +110,28 @@ type Song struct {
 func (e *Dao) insertSong(song Song, album *Album, artist *Artist) (int64, error) {
 	var err error
 
-	// if artist is not nil then insert the artist
-	if album != nil {
-		song.Album, err = e.insertAlbum(*album, *artist)
-		if err != nil {
-			return 0, err
+	/*
+		// if artist is not nil then insert the artist
+		if album != nil {
+			song.Album, err = e.insertAlbum(*album, *artist)
+			if err != nil {
+				return 0, err
+			}
 		}
-	}
 
-	// if artist is not nil then insert the artist
-	if artist != nil {
-		song.Artist, err = e.insertArtist(*artist)
-		if err != nil {
-			return 0, err
-		}
-	}
+		// if artist is not nil then insert the artist
+		if artist != nil {
+			song.Artist, err = e.insertArtist(*artist)
+			if err != nil {
+				return 0, err
+			}
+		}*/
 
 	//Insert a new song
 	db, err := e.openDB()
+	if err != nil {
+		return 0, err
+	}
 	res, err := db.Exec(`INSERT INTO songs (album_id, artist_id, song_name, song_path) VALUES (?, ?, ?, ?)`, 1, 1, "My Song", "song.mp3")
 	if err != nil {
 		return 0, err
@@ -145,16 +149,21 @@ func (e *Dao) insertSong(song Song, album *Album, artist *Artist) (int64, error)
 func (e *Dao) insertAlbum(album Album, artist Artist) (int64, error) {
 	var err error
 
-	// if artist is not nil then insert the artist
-	if artist.ID == 0 {
-		album.Artist, err = e.insertArtist(artist)
-		if err != nil {
-			return 0, err
+	/*
+		// if artist is not nil then insert the artist
+		if artist.ID == nil {
+			album.Artist, err = e.insertArtist(artist)
+			if err != nil {
+				return 0, err
+			}
 		}
-	}
+	*/
 
 	//Insert a new album
 	db, err := e.openDB()
+	if err != nil {
+		return 0, err
+	}
 	res, err := db.Exec(`INSERT INTO albums (artist_id, album_name, album_image) VALUES (?, ?, ?)`, album.Artist, album.Name, album.ImagePath)
 	if err != nil {
 		return 0, err

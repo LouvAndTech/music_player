@@ -21,7 +21,7 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-/* ==== Front requests ==== */
+/* ==== Front get ==== */
 func (a *App) GetAlbums(filters []Param) []Album {
 	albums, err := dao.getAlbums(filters...)
 	if err != nil {
@@ -38,4 +38,33 @@ func (a *App) GetArtists(filters []Param) []Artist {
 		return nil
 	}
 	return artist
+}
+
+/* ==== Front post ==== */
+
+func (a *App) PostArtists(artists Artist) bool {
+	_, err := dao.insertArtist(artists)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	return true
+}
+
+func (a *App) PostAlbums(albums Album) bool {
+	_, err := dao.insertAlbum(albums, Artist{ID: &albums.Artist})
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	return true
+}
+
+func (a *App) PostSongs(songs Song) bool {
+	_, err := dao.insertSong(songs, &Album{ID: &songs.Album}, &Artist{ID: &songs.Artist})
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	return true
 }
