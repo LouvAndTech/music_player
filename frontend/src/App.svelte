@@ -1,5 +1,5 @@
 <script lang="ts">
-  //import { Router, links, Route } from "svelte-routing";
+  import { Router, links, Route } from "svelte-routing";
 
   /* Routes */
   import Songs from "./pages/Songs.svelte";
@@ -12,9 +12,8 @@
 </script>
 
 <main>
-    <div class="navbar">
+    <!-- div class="navbar">
       <h1>Music player</h1>
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <ul class="page">
         <div>• Categories :</div>
         <li on:click={()=>{url="Songs"}}>Songs</li>
@@ -34,18 +33,18 @@
       {:else if url == 'Add'}
         <Add/>
       {/if}
-    </div>
-  <!--Router url="{url}">
+    </div-->
+  <Router url="{url}">
     <div class="navbar" use:links>
       <h1>Music player</h1>
-      <li class="page">
+      <ul class="page">
         <div>• Categories :</div>
-        <ul><a href="Songs">Songs</a></ul>
-        <ul><a href="Albums">Albums</a></ul>
-        <ul><a href="Artists">Artists</a></ul>
+        <li><a href="Songs">Songs</a></li>
+        <li><a href="Albums">Albums</a></li>
+        <li><a href="Artists">Artists</a></li>
         <div>• Tools :</div>
-        <ul><a href="Add">Add Song</a></ul>
-      </li>
+        <li><a href="Add">Add Song</a></li>
+      </ul>
     </div>
     <div>
       <Route path="Songs"><Songs/></Route>
@@ -53,7 +52,7 @@
       <Route path="Artists"><Artists/></Route>
       <Route path="Add"><Add/></Route>
     </div>
-  </Router-->
+  </Router>
 </main>
 
 

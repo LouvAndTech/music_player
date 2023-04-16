@@ -39,18 +39,3 @@ func (a *App) GetArtists(filters []Param) []Artist {
 	}
 	return artist
 }
-
-type Person struct {
-	Name    string   `json:"name"`
-	Age     uint8    `json:"age"`
-	Address *Address `json:"address"`
-}
-
-type Address struct {
-	Street   string `json:"street"`
-	Postcode string `json:"postcode"`
-}
-
-func (a *App) Greet(p Person) string {
-	return fmt.Sprintf("Hello %s (Age: %d)!", p.Name, p.Age)
-}

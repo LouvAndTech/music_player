@@ -40,21 +40,27 @@ func (e *Dao) initDB(path string) error {
 			first_name TEXT NOT NULL,
 			last_name TEXT
 		)`)
+	if err != nil {
+		return err
+	}
 	//Create a table for albums
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS albums (
 			album_id INTEGER PRIMARY KEY,
-			artist_id INTEGER NOT NULL,
+			artist_id INTEGER,
 			album_name TEXT NOT NULL,
 			album_image TEXT, 
 			FOREIGN KEY (artist_id) REFERENCES artists (person_id)
 		)`)
+	if err != nil {
+		return err
+	}
 	//Create a table for songs
 	// I've add the foregin key to an artist and album because I want to be able to get all the songs from an album and all the songs from an artist easily
 	// and i want to later be able to have a song in multiple albums
 	_, err = db.Exec(`CREATE TABLE IF NOT EXISTS songs (
 			song_id INTEGER PRIMARY KEY,
-			album_id INTEGER NOT NULL,
-			artist_id INTEGER NOT NULL,
+			album_id INTEGER,
+			artist_id INTEGER,
 			song_name TEXT NOT NULL,
 			song_path TEXT NOT NULL,
 			FOREIGN KEY (album_id) REFERENCES albums (album_id)

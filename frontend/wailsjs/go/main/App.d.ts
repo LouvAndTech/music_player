@@ -5,5 +5,3 @@ import {main} from '../models';
 export function GetAlbums(arg1:Array<main.Param>):Promise<Array<main.Album>>;
 
 export function GetArtists(arg1:Array<main.Param>):Promise<Array<main.Artist>>;
-
-export function Greet(arg1:main.Person):Promise<string>;

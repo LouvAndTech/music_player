@@ -9,7 +9,3 @@ export function GetAlbums(arg1) {
 export function GetArtists(arg1) {
   return window['go']['main']['App']['GetArtists'](arg1);
 }
-
-export function Greet(arg1) {
-  return window['go']['main']['App']['Greet'](arg1);
-}
