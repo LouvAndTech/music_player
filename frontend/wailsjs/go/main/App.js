@@ -10,6 +10,10 @@ export function GetArtists(arg1) {
   return window['go']['main']['App']['GetArtists'](arg1);
 }
 
+export function GetSongs(arg1) {
+  return window['go']['main']['App']['GetSongs'](arg1);
+}
+
 export function PostAlbums(arg1) {
   return window['go']['main']['App']['PostAlbums'](arg1);
 }

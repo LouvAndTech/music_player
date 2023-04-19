@@ -1,13 +1,15 @@
 <script lang="ts">
-  import { Router, links, Route } from "svelte-routing";
+  import { Router, links, Route, Link } from "svelte-navigator";
 
   /* Routes */
   import Songs from "./pages/Songs.svelte";
   import Albums from "./pages/Albums.svelte";
   import Artists from "./pages/Artists.svelte";
   import Add from "./pages/Add.svelte";
+  import SoloAlbum from "./pages/SoloAlbum.svelte";
 
-  export let url = "Songs";
+  export let url = "/Songs";
+
   
 </script>
 
@@ -15,20 +17,22 @@
   <Router url="{url}">
     <div class="navbar" use:links>
       <h1>Music player</h1>
-      <ul class="page">
+      <ul class="pages">
         <div>• Categories :</div>
-        <li><a href="Songs">Songs</a></li>
-        <li><a href="Albums">Albums</a></li>
-        <li><a href="Artists">Artists</a></li>
+        <li class="wrapper"><Link to="/Songs" replace class="my-link"><span class="link-content">Songs</span></Link></li>
+        <li class="wrapper"><Link to="/Albums" replace class="my-link">Albums</Link></li>
+        <li class="wrapper"><Link to="/Artists" replace class="my-link">Artists</Link></li>
         <div>• Tools :</div>
-        <li><a href="Add">Add Entry</a></li>
+        <li class="wrapper"><Link to="/Add" replace class="my-link">Add Entry</Link></li>
       </ul>
     </div>
     <div class="page">
-      <Route path="Songs"><Songs/></Route>
-      <Route path="Albums"><Albums/></Route>
-      <Route path="Artists"><Artists/></Route>
-      <Route path="Add"><Add/></Route>
+      <Route path="*"><Songs/></Route>
+      <Route path="/Songs"><Songs/></Route>
+      <Route path="/Albums"><Albums/></Route>
+      <Route path="/Albums/:id" component="{SoloAlbum}"/>
+      <Route path="/Artists"><Artists/></Route>
+      <Route path="/Add"><Add/></Route>
     </div>
   </Router>
 </main>
@@ -45,12 +49,18 @@
     width: 100vw;
 
     .navbar{
-      display: flex;
+
+      position: fixed; 
+      top: 0;
+      overflow: hidden;
+
       flex-direction: column;
       align-items: start;
       justify-content: start;
+      
       height: 100%;
-      width: 20%;
+      width: 20vw;
+
       background-color: var(--main-color-dark);
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
 
@@ -61,7 +71,7 @@
         padding: 1rem;
       }
 
-      .page{
+      .pages{
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -96,20 +106,21 @@
             transform: scale(1.1);
           }
 
-          a{
-            text-decoration: none;
-            color: currentColor;
-            width: 100%;
-            height: 100%;
-          }
+          
         }
       }
+    }
+
+    .wrapper :global(.my-link) {
+      all: unset;
+      color: var(--main-color-lighter);
     }
 
     .page{
       display: flex;
       align-items: start;
       justify-content: center;
+      margin-left: 20vw;
       width: 80%;
       height: 100%;
     }

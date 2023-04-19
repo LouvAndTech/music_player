@@ -22,20 +22,33 @@ func (a *App) startup(ctx context.Context) {
 }
 
 /* ==== Front get ==== */
+
+// Return the songs with the filters
+func (a *App) GetSongs(filters []Param) []Song {
+	songs, err := dao.getSongs(filters...)
+	if err != nil {
+		fmt.Println(err)
+		songs = make([]Song, 0)
+	}
+	return songs
+}
+
+// Return the songs with the filters
 func (a *App) GetAlbums(filters []Param) []Album {
 	albums, err := dao.getAlbums(filters...)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		albums = make([]Album, 0)
 	}
 	return albums
 }
 
+// Return the songs with the filters
 func (a *App) GetArtists(filters []Param) []Artist {
 	artist, err := dao.getArtists(filters...)
 	if err != nil {
 		fmt.Println(err)
-		return nil
+		artist = make([]Artist, 0)
 	}
 	return artist
 }

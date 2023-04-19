@@ -35,8 +35,8 @@ export namespace main {
 	    }
 	}
 	export class Param {
-	    field: string;
-	    value: string;
+	    key: string;
+	    value: any;
 	
 	    static createFrom(source: any = {}) {
 	        return new Param(source);
@@ -44,7 +44,7 @@ export namespace main {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.field = source["field"];
+	        this.key = source["key"];
 	        this.value = source["value"];
 	    }
 	}

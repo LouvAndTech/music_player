@@ -11,6 +11,8 @@
     let artists: main.Artist[] = [];
     let param : main.Param[] = []
 
+    //TODO : This add just a record in the database without any files (songs, images, etc) associated
+
     onMount(async () => {
         await updateAlbArt();
 	}); 

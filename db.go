@@ -132,7 +132,7 @@ func (e *Dao) insertSong(song Song, album *Album, artist *Artist) (int64, error)
 	if err != nil {
 		return 0, err
 	}
-	res, err := db.Exec(`INSERT INTO songs (album_id, artist_id, song_name, song_path) VALUES (?, ?, ?, ?)`, 1, 1, "My Song", "song.mp3")
+	res, err := db.Exec(`INSERT INTO songs (album_id, artist_id, song_name, song_path) VALUES (?, ?, ?, ?)`, song.Album, song.Artist, song.Name, song.Path)
 	if err != nil {
 		return 0, err
 	}
@@ -200,11 +200,30 @@ func (e *Dao) insertArtist(artist Artist) (int64, error) {
 /* --- SELECT --- */
 
 type Param struct {
-	Field string `json:"field"`
-	Value string `json:"value"`
+	Field string `json:"key"`
+	Value any    `json:"value"`
+}
+
+func formatWhereClause(filters []Param) (string, []any) {
+	var whereClause string
+	var values []any
+	for i, filter := range filters {
+		//Build the where clause
+		if i == 0 {
+			whereClause += " WHERE "
+		} else {
+			whereClause += " AND "
+		}
+		whereClause += filter.Field + " = ?"
+		//Build the values array
+		values = append(values, filter.Value)
+	}
+	return whereClause, values
 }
 
 //TODO refactor this function to be more generic and implement a heritance system
+
+//TODO add the option to get a specific number of songs and to get songs from a specific index
 
 // Get songs from the database
 // TODO add filters fonctionality for songs
@@ -215,7 +234,11 @@ func (e *Dao) getSongs(filters ...Param) ([]Song, error) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query(`SELECT * FROM songs`)
+	query := "SELECT * FROM songs"
+	where, values := formatWhereClause(filters)
+	query += where
+
+	rows, err := db.Query(query, values...)
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +265,11 @@ func (e *Dao) getAlbums(filters ...Param) ([]Album, error) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query(`SELECT * FROM albums`)
+	query := "SELECT * FROM albums"
+	where, values := formatWhereClause(filters)
+	query += where
+
+	rows, err := db.Query(query, values...)
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +296,11 @@ func (e *Dao) getArtists(filters ...Param) ([]Artist, error) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query(`SELECT * FROM artists`)
+	query := "SELECT * FROM artists"
+	where, values := formatWhereClause(filters)
+	query += where
+
+	rows, err := db.Query(query, values...)
 	if err != nil {
 		return nil, err
 	}

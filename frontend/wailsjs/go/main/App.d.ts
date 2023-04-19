@@ -6,6 +6,8 @@ export function GetAlbums(arg1:Array<main.Param>):Promise<Array<main.Album>>;
 
 export function GetArtists(arg1:Array<main.Param>):Promise<Array<main.Artist>>;
 
+export function GetSongs(arg1:Array<main.Param>):Promise<Array<main.Song>>;
+
 export function PostAlbums(arg1:main.Album):Promise<boolean>;
 
 export function PostArtists(arg1:main.Artist):Promise<boolean>;
