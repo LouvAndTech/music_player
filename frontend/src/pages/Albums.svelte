@@ -76,6 +76,12 @@
                         object-fit: cover;
                     }
 
+                    transition: 0.2s;
+                    cursor: pointer;
+                    &:hover{
+                        transform: scale(1.05);
+                    }
+
                 }
             }
 

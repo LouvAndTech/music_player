@@ -7,8 +7,10 @@
   import Artists from "./pages/Artists.svelte";
   import Add from "./pages/Add.svelte";
   import SoloAlbum from "./pages/SoloAlbum.svelte";
+  import SoloArtist from "./pages/SoloArtist.svelte";
 
   export let url = "/Songs";
+  console.log(url);
 
   
 </script>
@@ -32,6 +34,7 @@
       <Route path="/Albums"><Albums/></Route>
       <Route path="/Albums/:id" component="{SoloAlbum}"/>
       <Route path="/Artists"><Artists/></Route>
+      <Route path="/Artists/:id" component="{SoloArtist}"/>
       <Route path="/Add"><Add/></Route>
     </div>
   </Router>
