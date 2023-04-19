@@ -91,7 +91,7 @@
                 grid-column-end: 3;
                 grid-row: 1;
 
-                border-radius: 5px;
+                border-radius: 50%;
             }
 
             .info{
