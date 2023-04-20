@@ -9,8 +9,20 @@
   import SoloAlbum from "./pages/SoloAlbum.svelte";
   import SoloArtist from "./pages/SoloArtist.svelte";
 
+  /* Components */
+  import AudioPlayer from "./component/AudioPlayer.svelte";
+  import Ap from "./component/audioPlayer/Ap.svelte";
+
+  /* Data */
+  import { audioData } from "./component/audioPlayer/audioData.js";
+
+  //Load the first song from the db in the list into audioData
+  audioData.push({name: "Song 1", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"});
+
   export let url = "/Songs";
   console.log(url);
+
+  //let src = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
   
 </script>
@@ -37,11 +49,18 @@
       <Route path="/Artists/:id" component="{SoloArtist}"/>
       <Route path="/Add"><Add/></Route>
     </div>
+    <div class="player">
+      <!--AudioPlayer {src} /-->
+      <Ap/>
+    </div>
   </Router>
 </main>
 
 
 <style lang="scss">
+
+  $player-height: 10vh;
+  $navbar-width: 20vw;
 
   main{
     display: flex;
@@ -62,7 +81,7 @@
       justify-content: start;
       
       height: 100%;
-      width: 20vw;
+      width: $navbar-width;
 
       background-color: var(--main-color-dark);
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
@@ -114,6 +133,20 @@
       }
     }
 
+    .player{
+      position: fixed;
+      bottom: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      height: $player-height;
+      width: 100vw;
+      background-color: var(--main-color-dark);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
     .wrapper :global(.my-link) {
       all: unset;
       color: var(--main-color-lighter);
@@ -123,7 +156,11 @@
       display: flex;
       align-items: start;
       justify-content: center;
-      margin-left: 20vw;
+
+      //Give space for the menus and the player
+      margin-left: $navbar-width;
+      margin-bottom: $player-height;
+
       width: 80%;
       height: 100%;
     }
